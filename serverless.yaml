@@ -1,0 +1,47 @@
+service: vend-search
+custom: ${file(variables.yaml)}
+
+provider:
+  name: aws
+  runtime: python3.7
+  region: ${self:custom.aws_lamda_region}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:ListBucket
+      Resource:
+        - "arn:aws:s3:::${self:custom.aws_s3_bucket_name}"
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+      Resource:
+        - "arn:aws:s3:::${self:custom.aws_s3_bucket_name}/vend_search.json"
+    - Effect: Allow
+      Action:
+        - ses:SendEmail
+      Resource: "*"
+
+functions:
+  vend-search:
+    handler: handler.search
+    events:
+      - schedule: rate(5 minutes)
+    environment:
+      QUERIES: ${self:custom.queries}
+      S3_BUCKET: ${self:custom.aws_s3_bucket_name}
+      S3_CACHE_FILE: vend_search.json
+      SES_EMAIL_FROM: ${self:custom.email_from}
+      SES_EMAIL_TO: ${self:custom.email_to}
+      SES_REGION: ${self:custom.aws_ses_region}
+
+resources:
+  Resources:
+    NewResource:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.aws_s3_bucket_name}
+
+plugins:
+  - serverless-python-requirements

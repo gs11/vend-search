@@ -1,0 +1,6 @@
+aws_lamda_region: my_region
+aws_ses_region: my_region
+aws_s3_bucket_name: my_bucket_name
+email_from: no-reply@example.com
+email_to: me@example.com
+queries: synth,piano,other
