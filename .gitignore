@@ -21,6 +21,6 @@ var/
 soupsieve*
 bs4/
 beautifulsoup4*
-variables.yaml
 node_modules/
 package-lock.json
+variables.yaml
