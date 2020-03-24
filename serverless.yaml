@@ -45,3 +45,13 @@ resources:
 
 plugins:
   - serverless-python-requirements
+
+package:
+  exclude:
+    - node_modules/**
+    - variables.yaml
+    - variables.yaml.sample
+    - Makefile
+    - package*.json
+    - requirements.txt
+    - README.md
