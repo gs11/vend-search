@@ -15,6 +15,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+__pycache__/
 
 # Serverless directories
 .serverless
@@ -24,3 +25,4 @@ beautifulsoup4*
 node_modules/
 package-lock.json
 variables.yaml
+

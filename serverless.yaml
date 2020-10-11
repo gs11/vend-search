@@ -3,7 +3,7 @@ custom: ${file(variables.yaml)}
 
 provider:
   name: aws
-  runtime: python3.7
+  runtime: python3.8
   region: ${self:custom.aws_lamda_region}
 
   iamRoleStatements:
