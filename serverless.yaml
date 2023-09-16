@@ -3,25 +3,27 @@ custom: ${file(variables.yaml)}
 
 provider:
   name: aws
-  runtime: python3.8
+  runtime: python3.11
   region: ${self:custom.aws_lamda_region}
-
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - s3:ListBucket
-      Resource:
-        - "arn:aws:s3:::${self:custom.aws_s3_bucket_name}"
-    - Effect: Allow
-      Action:
-        - s3:GetObject
-        - s3:PutObject
-      Resource:
-        - "arn:aws:s3:::${self:custom.aws_s3_bucket_name}/vend_search.json"
-    - Effect: Allow
-      Action:
-        - ses:SendEmail
-      Resource: "*"
+  lambdaHashingVersion: 20201221
+  iam:
+    role:
+      statements:
+      - Effect: Allow
+        Action:
+          - s3:ListBucket
+        Resource:
+          - "arn:aws:s3:::${self:custom.aws_s3_bucket_name}"
+      - Effect: Allow
+        Action:
+          - s3:GetObject
+          - s3:PutObject
+        Resource:
+          - "arn:aws:s3:::${self:custom.aws_s3_bucket_name}/vend_search.json"
+      - Effect: Allow
+        Action:
+          - ses:SendEmail
+        Resource: "*"
 
 functions:
   vend-search:
